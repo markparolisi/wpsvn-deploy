@@ -37,6 +37,9 @@ if [ -z "$SVNURL" ];then SVNURL="http://plugins.svn.wordpress.org/$PLUGINSLUG"; 
 # Let's begin...
 echo -e "Preparing to deploy wordpress plugin... \n"
 
+# Check if SVN repo exists
+if [[ `svn info $SVNURL` -ne 1 ]]; then echo "SVN repo does not exist. Exiting..."; exit 1; fi
+
 # Check version in readme.txt is the same as plugin file
 NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk '{print $NF+0}'`
 echo "readme version: $NEWVERSION1"

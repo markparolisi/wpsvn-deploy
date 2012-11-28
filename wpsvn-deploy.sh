@@ -82,9 +82,11 @@ svn co $SVNURL $SVNPATH
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
 
-echo "Ignoring github specific files and deployment script"
+echo "Ignoring github specific files, test directories, and deployment script"
 svn propset svn:ignore "deploy.sh
 README.md
+test
+tests
 .git
 .gitignore" "$SVNPATH/trunk/"
 

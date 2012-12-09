@@ -33,9 +33,9 @@ echo -e "Preparing to deploy wordpress plugin... \n"
 if [[ `svn info $SVNURL` -ne 1 ]]; then echo "SVN repo does not exist. Exiting..."; exit 1; fi
 
 # Check version in readme.txt is the same as plugin file
-NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk '{print $NF+0}'`
+NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk '{print $NF}'`
 echo "readme version: $NEWVERSION1"
-NEWVERSION2=`grep "^  Version" $GITPATH/$MAINFILE | awk '{print $NF+0}'`
+NEWVERSION2=`grep "^  Version" $GITPATH/$MAINFILE | awk '{print $NF}'`
 echo "$MAINFILE version: $NEWVERSION2"
 
 if [ "$NEWVERSION1" != "$NEWVERSION2" ]; then echo "Versions don't match. Exiting...."; exit 1; fi
@@ -63,6 +63,7 @@ if [ "$tag_exists" ]
             echo "Exiting..."; exit 1; 
         fi
 fi
+exit;
 
 cd $GITPATH
 echo -e "Enter a commit message for this new version: \c"

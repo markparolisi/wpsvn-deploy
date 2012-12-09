@@ -1,7 +1,9 @@
 #! /bin/bash
 # Another modification based on the below...
 # A modification of Dean Clatworthy's deploy script as found here: https://github.com/deanc/wordpress-plugin-git-svn
-# The difference is that this script lives in the plugin's git repo & doesn't require an existing SVN repo.
+# Adds/changes the following:
+# - doesn't require an existing SVN repo
+# - excludes this file and any 'tests' directories when commiting to svn
 
 USAGE="
 Usage: \n 
@@ -83,9 +85,11 @@ svn co $SVNURL $SVNPATH
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
 
-echo "Ignoring github specific files and deployment script"
-svn propset svn:ignore "deploy.sh
+echo "Ignoring github specific files, test directories, and deployment script"
+svn propset svn:ignore "${0##*/}
 README.md
+test
+tests
 .git
 .gitignore" "$SVNPATH/trunk/"
 

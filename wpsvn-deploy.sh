@@ -65,7 +65,6 @@ if [ "$tag_exists" ]
             echo "Exiting..."; exit 1; 
         fi
 fi
-exit;
 
 cd $GITPATH
 echo -e "Enter a commit message for this new version: \c"

@@ -3,14 +3,14 @@
 # A modification of Dean Clatworthy's deploy script as found here: https://github.com/deanc/wordpress-plugin-git-svn
 # Adds/changes the following:
 # - doesn't require an existing SVN repo
-# - excludes this file and any 'tests' directories when commiting to svn
+# - excludes this file and any 'test' directories when commiting to svn
 
 USAGE="
-Usage: \n 
--n = Plugin slug name ex. page-links-to. DEFAULT: use working  directory(pwd) \n 
--u = REQUIRED. WP  SVN  username \n  
--f = Plugin  mainfile.  DEFAULT: {plugin  slug}.php  \n  
--p = SVN repo  path.  DEFAULT: http://plugins.svn.wordpress.org/{plugin slug}  \n 
+Usage: \n
+-n = Plugin slug name ex. page-links-to. DEFAULT: use working  directory(pwd) \n
+-u = REQUIRED. WP  SVN  username \n
+-f = Plugin  mainfile.  DEFAULT: {plugin  slug}.php  \n
+-p = SVN repo  path.  DEFAULT: http://plugins.svn.wordpress.org/{plugin slug}  \n
 -d = Git  directory. DEFAULT:  use working  directory(pwd). "
 while getopts  ":n:f:p:u:d:h" OPTIONS; do case  $OPTIONS in n )  PLUGINSLUG=$OPTARG;; f ) MAINFILE=$OPTARG;;  p )
 SVNURL=$OPTARG;;  u  )  SVNUSER=$OPTARG;;  d  )  CURRENTDIR=$OPTARG;;  h  )  echo  -e  $USAGE;  exit;  esac  done
@@ -20,7 +20,7 @@ if [ -z "$PLUGINSLUG" ];then PLUGINSLUG=${PWD##*/}; fi
 if [ -z "$SVNUSER" ]; then
 	echo "Enter your WP SVN username"
 	read input_variable
-	SVNUSER=$input_variable;	
+	SVNUSER=$input_variable;
 fi
 if [ -z "$MAINFILE" ];then MAINFILE="$PLUGINSLUG.php"; fi
 if [ -z "$CURRENTDIR" ];then CURRENTDIR=`pwd`; fi
@@ -62,7 +62,7 @@ if [ "$tag_exists" ]
         if promptyn "Tag already exists. Do you wish to continue?"; then
             echo "Continuing...";
         else
-            echo "Exiting..."; exit 1; 
+            echo "Exiting..."; exit 1;
         fi
 fi
 
@@ -96,7 +96,7 @@ echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
-# Delete all missing files 
+# Delete all missing files
 svn status | grep -v "^.[ \t]*\..*" | grep "^!" | awk '{print $2}' | xargs svn del
 svn commit --username=$SVNUSER -m "$COMMITMSG"
 
